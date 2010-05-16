@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <script src="jquery-1.4.2.js"></script>
+    <script type="text/javascript">
+      function cronometrar(minutes, seconds,isFirst) {
+        time = new Date(0)
+        time.setHours(0)
+        time.setMinutes(minutes)
+        hh = time.getHours()
+        mm = time.getMinutes()
+        ss = 0
+        if (!isFirst) {
+          mm--
+          ss = ((seconds > 0) ? seconds - 1 : 59)
+        }
+        timer = ((hh < 10) ? "0" + hh : hh) + ":" + ((mm < 10) ? "0" + mm : mm) + ":" + ((ss < 10) ? "0" + ss : ss)
+        $('#display').html(timer)
+        if (ss == 0 && !isFirst) {minutes = minutes-1} 
+        if ((ss+mm+hh) == 0) {
+          startStop('stop')
+          $('#display').addClass('end')
+          $('#display').fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300)
+        } else {
+          ctrlTime = setTimeout ("cronometrar("+ minutes + "," + ss + ", false)", 1000)
+        }
+      }
+      function filterNumbers(value) {
+        return value.replace(/\D/, '')
+      }
+      function startStop(action) {
+        if (action == 'start') {
+          $('#stop').show()
+          $('#start').hide()
+          $('#display').removeClass('end')
+          cronometrar($('#tempo').val(),0,true)
+        } else {
+          $('#start').show()
+          $('#stop').hide()
+          clearTimeout(ctrlTime)
+        }
+      }
+      var tecla = ''
+      $(function(){
+        var cronometrando = false
+        $('#start').click(function(){startStop('start')})
+        $('#stop').click(function(){startStop('stop')})
+        $('#start').attr('src','start button.png').show() 
+        $('#stop').attr('src','stop button.png').hide()
+        //$('#tempo').keydown(function(key){return (key.keyCode >= 48) && (key.keyCode <= 57) })
+        $('#tempo').keyup(function(key){$(this).val(filterNumbers($(this).val()))})
+        /*if (navigator.userAgent.indexOf("MSIE") != "-1") {
+          document.write('<bgsound src="Captcha.wav" loop="1" autostart="true">')
+        } else {
+          document.write('<embed src="Captcha.wav" loop="1" hidden="true" autostart="true">')
+        } */
+      })
+    </script>
+    <style type="text/css">
+      body {
+        background-color:#ffffbb;
+      }
+      #buttons {
+        height: 50px;
+        width: 50px;
+        margin: auto;
+      }
+      img {
+        position: absolute;
+        height: 50px;
+        width: 50px;
+      }
+      #cronometro {
+        margin-top: 50px;
+        padding: 10px 10px 10px 10px;
+        width: 350px;
+        background-color: #ddddff;
+        margin: auto;
+      }
+      #display {
+        margin: auto;
+        text-align: center;
+        font-size: 50px;
+        font-family: arial;
+      }
+      .end {
+        color: red;
+      }
+      #setup {
+        width: 185;
+        margin: auto;
+        font-size: 20px;
+        padding-left: 20px;
+      }
+      #tempo {
+        font-size: 25px;
+        width: 35px;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="cronometro">
+      <div id="setup">
+        <label for="tempo">Tempo:</label> 
+        <input type="text" size=3 maxlength=3 name="tempo" id="tempo" /> 
+        <label for="tempo">minuto(s)</label>
+      </div>
+      <div id='buttons'>
+        <img id="start" />
+        <img id="stop" />
+      </div>
+      <div id="display">
+        00:00:00
+      </div>
+    </div>
+  </body>
+</html>

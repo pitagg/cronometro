@@ -1,0 +1,102 @@
+<!----------começa aqui--------------->
+<SCRIPT language=JavaScript>
+<!--
+var alarmTime;
+var curTime;
+var check = new Date();
+var hourNum;
+var minNum;
+function GetTime() {
+var dt = new Date();
+document.clock.local.value = IfZero(dt.getHours()) + ":" + IfZero(dt.getMinutes());
+setTimeout("GetTime()", 1000);
+curTime = (IfZero(dt.getHours()) + ":" + IfZero(dt.getMinutes()));
+}
+function IfZero(num) {
+return ((num <= 9) ? ("0" + num) : num);
+}
+function alarmSet() {
+hourNum = document.clock.hourOpt[document.clock.hourOpt.selectedIndex].value;
+minNum = document.clock.minOpt[document.clock.minOpt.selectedIndex].value;
+alarmTime = hourNum + ":" + minNum;
+}
+function alarmOn() {
+if (alarmTime == curTime) {
+document.all.sound.src = document.clock.alarmSound.value;
+}
+else {
+setTimeout("alarmOn()", 1000)
+   }
+}
+function alarmOff() {
+document.all.sound.src = "";
+alarmTime="";
+}
+function snooze() {
+document.all.sound.src = "";
+var snoozeL = parseInt(document.clock.snoozeOpt[document.clock.snoozeOpt.selectedIndex].value);
+var snooze = new Date();
+alarmTime = IfZero(snooze.getHours()) + ":" + IfZero(snooze.getMinutes() + snoozeL);
+alarmOn();
+}
+// -->
+</SCRIPT>
+<BGSOUND id=sound src="">
+</HEAD>
+<BODY onload=GetTime() bgcolor="#EFEFEF">
+<TABLE width="45%" border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle>
+      <FORM name=clock><INPUT size=8 name=local> <INPUT onclick=alarmOn() type=radio name=alarmOnOff>
+        <B><FONT face=verdana color=black size=2>On 
+        <INPUT onclick=alarmOff() type=radio CHECKED name=alarmOnOff>Off </FONT>
+      <TD align=middle><B><FONT face=verdana color=black size=2>Mude a hora
+        <BR><SELECT onchange=alarmSet() size=1 name=hourOpt> <OPTION
+          value=00>00<OPTION value=01>01<OPTION value=02>02<OPTION
+          value=03>03<OPTION value=04>04<OPTION value=05>05<OPTION
+          value=06>06<OPTION value=07>07<OPTION value=08>08<OPTION
+          value=09>09<OPTION value=10>10<OPTION value=11>11<OPTION value=12
+          selected>12<OPTION value=13>13<OPTION value=14>14<OPTION
+          value=15>15<OPTION value=16>16<OPTION value=17>17<OPTION
+          value=18>18<OPTION value=19>19<OPTION value=20>20<OPTION
+          value=21>21<OPTION value=22>22<OPTION value=23>23</OPTION></SELECT>
+        <SELECT onchange=alarmSet() size=1 name=minOpt> <OPTION value=00
+          selected>00<OPTION value=01>01<OPTION value=02>02<OPTION
+          value=03>03<OPTION value=04>04<OPTION value=05>05<OPTION
+          value=06>06<OPTION value=07>07<OPTION value=08>08<OPTION
+          value=09>09<OPTION value=10>10<OPTION value=11>11<OPTION
+          value=12>12<OPTION value=13>13<OPTION value=14>14<OPTION
+          value=15>15<OPTION value=16>16<OPTION value=17>17<OPTION
+          value=18>18<OPTION value=19>19<OPTION value=20>20<OPTION
+          value=21>21<OPTION value=22>22<OPTION value=23>23<OPTION
+          value=24>24<OPTION value=25>25<OPTION value=26>26<OPTION
+          value=27>27<OPTION value=28>28<OPTION value=29>29<OPTION
+          value=30>30<OPTION value=31>31<OPTION value=32>32<OPTION
+          value=33>33<OPTION value=34>34<OPTION value=35>35<OPTION
+          value=36>36<OPTION value=37>37<OPTION value=38>38<OPTION
+          value=39>39<OPTION value=40>40<OPTION value=41>41<OPTION
+          value=42>42<OPTION value=43>43<OPTION value=44>44<OPTION
+          value=45>45<OPTION value=46>46<OPTION value=47>47<OPTION
+          value=48>48<OPTION value=49>49<OPTION value=50>50<OPTION
+          value=51>51<OPTION value=52>52<OPTION value=53>53<OPTION
+          value=54>54<OPTION value=55>55<OPTION value=56>56<OPTION
+          value=57>57<OPTION value=58>58<OPTION value=59>59</OPTION></SELECT>
+      </TD>
+      <TR>
+        <TD align=middle>
+          <B><FONT face=verdana color=black size=2>Selecione o som do alarme <BR><INPUT type=file size=10 name=alarmSound> </FONT>
+          <TD align=middle>
+            <B><FONT face=verdana color=black size=2>Snooze: <BR>
+              <SELECT onchange=snooze() size=1 name=snoozeOpt> 
+                <OPTION value=1>1
+                <OPTION value=2>2
+                <OPTION value=3>3
+                <OPTION value=4>4
+                <OPTION value=5>5
+                <OPTION value=6>6
+                <OPTION value=7>7
+                <OPTION value=8>8
+                <OPTION value=9 selected>9 </OPTION></SELECT>
+      </FORM></FONT></TD></TR></TBODY></TABLE>
+<!----------termina aqui--------------->
